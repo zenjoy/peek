@@ -48,6 +48,33 @@ module Peek
     @adapter
   end
 
+  def self.included_paths
+    @included_paths ||= []
+  end
+
+  def self.included_paths=(*paths)
+    included_paths.concat(Array.wrap(paths))
+  end
+
+  def self.included_path?(path)
+    return true unless included_paths.length > 0
+
+    included_path = false
+    included_paths.each do |included|
+      case included
+      when Regexp
+        included_path = !! (path =~ included)
+      when String
+        included_path = path == included
+      end
+
+      break if included_path
+    end
+
+    included_path
+  end
+
+
   def self.enabled?
     ALLOWED_ENVS.include?(env)
   end

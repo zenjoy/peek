@@ -1,4 +1,4 @@
-require 'peek/controller_helpers'
+  require 'peek/controller_helpers'
 
 module Peek
   class Railtie < ::Rails::Engine
@@ -19,8 +19,8 @@ module Peek
     end
 
     initializer 'peek.persist_request_data' do
-      ActiveSupport::Notifications.subscribe('process_action.action_controller') do
-        Peek.adapter.save
+      ActiveSupport::Notifications.subscribe('process_action.action_controller') do |name, start, finish, id, payload|
+        Peek.adapter.save if Peek.included_path?(payload[:path]) rescue nil
         Peek.clear
       end
     end
