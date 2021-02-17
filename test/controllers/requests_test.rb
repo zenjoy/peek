@@ -7,7 +7,7 @@ class RequestsTest < ActionDispatch::IntegrationTest
     Peek.reset
   end
 
-  test "the request id is set" do
+  test 'the request id is set' do
     assert_empty Peek.adapter.requests
 
     get '/'
@@ -15,7 +15,7 @@ class RequestsTest < ActionDispatch::IntegrationTest
     assert_not_empty Peek.adapter.requests
   end
 
-  test "the request ID and data are set correctly for concurrent requests" do
+  test 'the request ID and data are set correctly for concurrent requests' do
     Peek.into TestView
     concurrent_requests = 10
 
